@@ -1,0 +1,324 @@
+/* ── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:      #1a3a6b;
+  --navy-mid:  #1e4d8c;
+  --blue-dark: #0d2b5e;
+  --blue-light:#4a7cc7;
+  --stripe:    #eef2f8;
+  --border:    #c5cfe0;
+  --text:      #222;
+  --muted:     #555;
+  --white:     #ffffff;
+  --total-bg:  #1a3a6b;
+}
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  background: #dde3ec;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px 16px;
+}
+
+/* ── Page Shell ───────────────────────────────────────────── */
+.invoice-wrapper {
+  background: var(--white);
+  width: 100%;
+  max-width: 720px;
+  box-shadow: 0 4px 32px rgba(0,0,0,.18);
+  overflow: hidden;
+}
+
+/* ── HEADER ───────────────────────────────────────────────── */
+.inv-header {
+  position: relative;
+  background: linear-gradient(135deg, var(--blue-dark) 0%, var(--navy-mid) 50%, #2a6ab0 100%);
+  padding: 22px 28px 20px;
+  overflow: hidden;
+  min-height: 90px;
+}
+
+/* swoosh arc overlay */
+.header-swoosh {
+  position: absolute;
+  top: -40px; right: -60px;
+  width: 340px; height: 200px;
+  background: rgba(255,255,255,.06);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.header-swoosh::after {
+  content: '';
+  position: absolute;
+  top: 30px; left: 30px;
+  width: 280px; height: 160px;
+  background: rgba(255,255,255,.05);
+  border-radius: 50%;
+}
+
+.header-content { position: relative; z-index: 1; }
+
+.company-name {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+  outline: none;
+}
+.company-name:focus { background: rgba(255,255,255,.12); border-radius: 3px; }
+
+.company-details {
+  font-size: 11.5px;
+  color: rgba(255,255,255,.82);
+  margin-top: 5px;
+  line-height: 1.6;
+  font-weight: 300;
+  outline: none;
+}
+.company-details:focus { background: rgba(255,255,255,.1); border-radius: 3px; }
+
+/* ── INVOICE META ─────────────────────────────────────────── */
+.inv-meta {
+  padding: 18px 28px 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.inv-number-label {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 22px;
+  color: var(--navy);
+  font-weight: 400;
+}
+.inv-number-label span {
+  outline: none;
+  border-bottom: 1px dashed var(--border);
+}
+.inv-number-label span:focus { border-bottom-color: var(--blue-light); }
+
+.inv-date {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.inv-date input[type="date"] {
+  border: none;
+  border-bottom: 1px solid var(--border);
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--text);
+  padding: 1px 4px;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+}
+.inv-date input[type="date"]:focus { border-bottom-color: var(--blue-light); }
+
+/* ── BILL TO / FOR ────────────────────────────────────────── */
+.inv-parties {
+  display: flex;
+  gap: 24px;
+  padding: 20px 28px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.bill-to, .for-block { flex: 1; }
+
+.inv-parties h3 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 18px;
+  color: var(--navy);
+  font-weight: 400;
+  margin-bottom: 6px;
+}
+
+.party-details {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.7;
+  outline: none;
+  border-left: 2px solid transparent;
+  padding-left: 4px;
+  transition: border-color .2s;
+}
+.party-details:focus {
+  border-left-color: var(--blue-light);
+  color: var(--text);
+}
+
+/* ── ITEMS TABLE ──────────────────────────────────────────── */
+.inv-items {
+  padding: 0 28px 4px;
+}
+
+#items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+#items-table thead tr {
+  background: var(--navy);
+}
+#items-table thead th {
+  color: var(--white);
+  font-weight: 600;
+  font-size: 12.5px;
+  padding: 9px 14px;
+  text-align: left;
+  letter-spacing: 0.4px;
+}
+.col-desc   { width: 65%; }
+.col-amount { width: 35%; text-align: right !important; }
+
+.item-row { border-bottom: 1px solid var(--border); }
+.item-row:nth-child(even) { background: var(--stripe); }
+
+.item-row td { padding: 6px 8px; }
+
+.item-desc,
+.item-amount {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 12.5px;
+  color: var(--text);
+  padding: 4px 6px;
+  outline: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color .15s;
+}
+.item-desc:focus,
+.item-amount:focus { border-bottom-color: var(--blue-light); }
+
+.item-amount { text-align: right; }
+/* hide number spinners */
+.item-amount::-webkit-inner-spin-button,
+.item-amount::-webkit-outer-spin-button { -webkit-appearance: none; }
+.item-amount { -moz-appearance: textfield; }
+
+.add-row-btn {
+  margin: 8px 0 10px;
+  background: none;
+  border: 1px dashed var(--blue-light);
+  color: var(--navy-mid);
+  font-family: inherit;
+  font-size: 12px;
+  padding: 5px 14px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background .15s, color .15s;
+}
+.add-row-btn:hover { background: var(--navy-mid); color: var(--white); }
+
+/* ── TOTALS ───────────────────────────────────────────────── */
+.inv-totals {
+  padding: 10px 28px 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.totals-grid {
+  display: grid;
+  grid-template-columns: auto 180px;
+  align-items: center;
+  gap: 6px 10px;
+  width: 340px;
+}
+
+.totals-grid label {
+  text-align: right;
+  font-size: 12.5px;
+  color: var(--muted);
+  padding-right: 8px;
+}
+
+.total-cell {
+  background: var(--stripe);
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  text-align: right;
+  font-size: 12.5px;
+  color: var(--text);
+  min-height: 30px;
+}
+
+/* tax & other cost inputs inside cells */
+.tax-input-cell,
+.other-input-cell {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  padding: 2px 10px;
+}
+.tax-input-cell input,
+.other-input-cell input {
+  width: 80px;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  font-family: inherit;
+  font-size: 12.5px;
+  text-align: right;
+  color: var(--text);
+  outline: none;
+}
+.tax-input-cell input::-webkit-inner-spin-button,
+.tax-input-cell input::-webkit-outer-spin-button,
+.other-input-cell input::-webkit-inner-spin-button,
+.other-input-cell input::-webkit-outer-spin-button { -webkit-appearance: none; }
+.tax-input-cell input,
+.other-input-cell input { -moz-appearance: textfield; }
+.tax-input-cell input:focus,
+.other-input-cell input:focus { border-bottom-color: var(--blue-light); }
+.tax-input-cell span { font-size: 12px; color: var(--muted); }
+
+/* Total Cost row */
+.total-label {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: var(--text) !important;
+}
+.total-final {
+  background: var(--navy) !important;
+  color: var(--white) !important;
+  font-weight: 700;
+  font-size: 13.5px;
+  border-color: var(--navy) !important;
+}
+
+/* ── FOOTER ───────────────────────────────────────────────── */
+.inv-footer {
+  border-top: 2px solid var(--navy);
+  padding: 14px 28px 20px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.inv-footer p { margin-bottom: 8px; outline: none; }
+.inv-footer p:focus { color: var(--text); }
+.inv-footer strong { color: var(--text); }
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 540px) {
+  .inv-parties { flex-direction: column; gap: 12px; }
+  .totals-grid { width: 100%; }
+  .invoice-wrapper { box-shadow: none; }
+  body { padding: 0; }
+}
+
+/* ── Print ────────────────────────────────────────────────── */
+@media print {
+  body { background: white; padding: 0; }
+  .add-row-btn { display: none; }
+  .invoice-wrapper { box-shadow: none; }
+}
